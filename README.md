@@ -33,12 +33,12 @@ Polimorfismo: Métodos virtuales sobrescritos (mostrarInfo(), hacerSonido(), etc
 
 Composición: Clase Estudiante contiene objetos de tipo Curso.
 
-Validaciones: Restricciones en setters y c
+Validaciones: Restricciones en setters y constructores para mantener integridad de datos
 
 👨‍💻 Autores:
 Jacob Cadavid Palacios
 Con apoyo en corrección de errores de Microsoft Copilot.
-onstructores para mantener integridad de datos
+
 
 
 
