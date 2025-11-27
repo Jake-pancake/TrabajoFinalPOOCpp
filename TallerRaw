@@ -1,0 +1,1201 @@
+/*
+ Ejercicio 1.1: Clase Vehículo
+Crea una clase `Vehículo` con los siguientes atributos **privados**:
+- `marca` (string)
+- `modelo` (string)
+- `año` (int)
+- `velocidadMaxima` (double)
+
+**Requisitos:**
+- ✅ Constructor que inicialice todos los atributos
+- ✅ Getters para todos los atributos
+- ✅ Setters para todos los atributos con validaciones:
+  - El año debe ser mayor a 1886 (primer vehículo motorizado)
+  - La velocidad máxima debe ser positiva
+- ✅ Método `mostrarInfo()` que imprima todos los datos
+- ✅ Método `acelerar(double incremento)` que aumente la velocidad máxima
+
+**Ejemplo de uso esperado:**
+```
+Vehículo auto("Toyota", "Corolla", 2023, 180);
+auto.mostrarInfo();
+auto.acelerar(20);
+auto.mostrarInfo();
+
+*/
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Clase Vehiculo
+class Vehiculo {
+private:
+    string marca;
+    string modelo;
+    int año;
+    double velocidadMaxima;
+
+public:
+    // Constructor con validaciones
+    Vehiculo(string ma, string mo, int a, double v) {
+        if (a > 1886) {
+            año = a;
+        } else {
+            año = 1887; // valor mínimo válido
+        }
+
+        if (v > 0) {
+            velocidadMaxima = v;
+        } else {
+            velocidadMaxima = 1; // valor mínimo válido
+        }
+
+        marca = ma;
+        modelo = mo;
+    }
+
+    // Getters
+    string getMarca() { return marca; }
+    string getModelo() { return modelo; }
+    int getAño() { return año; }
+    double getVelocidadMaxima() { return velocidadMaxima; }
+
+    // Setters con validaciones
+    void setMarca(string ma) { marca = ma; }
+    void setModelo(string mo) { modelo = mo; }
+
+    void setAño(int a) {
+        if (a > 1886) {
+            año = a;
+        } else {
+            cout << "El año debe ser mayor a 1886." << endl;
+        }
+    }
+
+    void setVelocidadMaxima(double v) {
+        if (v > 0) {
+            velocidadMaxima = v;
+        } else {
+            cout << "La velocidad máxima debe ser positiva." << endl;
+        }
+    }
+
+    // Método mostrarInfo
+    void mostrarInfo() {
+        cout << "Vehiculo: " << marca
+             << "\nModelo: " << modelo
+             << "\nAño: " << año
+             << "\nVelocidad Máxima: " << velocidadMaxima << " km/h"
+             << endl;
+    }
+
+    // Método acelerar
+    void acelerar(double incremento) {
+        if (incremento > 0) {
+            velocidadMaxima += incremento;
+        } else {
+            cout << "El incremento debe ser positivo." << endl;
+        }
+    }
+};
+
+// Ejemplo de uso
+int main() {
+    Vehiculo miAuto("Mazda", "626 Hs", 2002, 180);
+    miAuto.mostrarInfo();
+
+    miAuto.acelerar(20);
+    miAuto.mostrarInfo();
+}
+
+
+/*
+Ejercicio 1.2: Clase Producto
+Crea una clase `Producto` para una tienda con:
+- `codigo` (string)
+- `nombre` (string)
+- `precio` (double)
+- `cantidad` (int)
+
+**Requisitos:**
+- ✅ Constructor inicializador
+- ✅ Getters y Setters con validaciones:
+  - Precio no puede ser negativo
+  - Cantidad no puede ser negativa
+- ✅ Método `calcularValorTotal()` que retorne precio × cantidad
+- ✅ Método `aplicarDescuento(double porcentaje)` que reduzca el precio
+- ✅ Método `mostrarInfo()` que muestre todos los datos
+
+**Ejemplo de uso:**
+```
+Producto laptop("001", "Laptop HP", 850.00, 5);
+laptop.mostrarInfo();
+cout << "Valor total: $" << laptop.calcularValorTotal() << endl;
+laptop.aplicarDescuento(10); // 10% de descuento
+laptop.mostrarInfo();
+```
+*/
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Clase Producto
+class Producto {
+private:
+    string codigo;
+    string nombre;
+    double precio;
+    int cantidad;
+
+public:
+    // Constructor inicializador con validaciones
+    Producto(string c, string n, double p, int cant) {
+        codigo = c;
+        nombre = n;
+        precio = (p >= 0) ? p : 0;       // validación: precio no negativo
+        cantidad = (cant >= 0) ? cant : 0; // validación: cantidad no negativa
+    }
+
+    // Getters
+    string getCodigo() { return codigo; }
+    string getNombre() { return nombre; }
+    double getPrecio() { return precio; }
+    int getCantidad() { return cantidad; }
+
+    // Setters con validaciones
+    void setCodigo(string c) { codigo = c; }
+    void setNombre(string n) { nombre = n; }
+
+    void setPrecio(double p) {
+        if (p >= 0) {
+            precio = p;
+        } else {
+            cout << "El precio no puede ser negativo." << endl;
+        }
+    }
+
+    void setCantidad(int cant) {
+        if (cant >= 0) {
+            cantidad = cant;
+        } else {
+            cout << "La cantidad no puede ser negativa." << endl;
+        }
+    }
+
+    // Método calcularValorTotal
+    double calcularValorTotal() {
+        return precio * cantidad;
+    }
+
+    // Método aplicarDescuento
+    void aplicarDescuento(double porcentaje) {
+        if (porcentaje > 0 && porcentaje <= 100) {
+            double descuento = precio * (porcentaje / 100.0);
+            precio -= descuento;
+        } else {
+            cout << "El porcentaje de descuento debe estar entre 0 y 100." << endl;
+        }
+    }
+
+    // Método mostrarInfo
+    void mostrarInfo() {
+        cout << "Codigo: " << codigo
+             << "\nNombre: " << nombre
+             << "\nPrecio: $" << precio
+             << "\nCantidad: " << cantidad
+             << endl;
+    }
+};
+
+// Ejemplo de uso
+int main() {
+    Producto laptop("1217", "Lenovo Z470", 150.0, 5);
+    laptop.mostrarInfo();
+
+    cout << "Valor total: $" << laptop.calcularValorTotal() << endl;
+
+    laptop.aplicarDescuento(10); // 10% de descuento
+    laptop.mostrarInfo();
+
+}
+
+/*
+ Ejercicio 2.1: Vehículos (Auto y Motocicleta)
+Partiendo de la clase `Vehículo` del Ejercicio 1.1, crea dos clases derivadas:
+
+#### Clase `Auto` hereda de `Vehículo`
+Atributos adicionales:
+- `numeroPuertas` (int)
+- `tipoCombustible` (string)
+
+Métodos:
+- Constructor
+- Getters y Setters
+- `mostrarInfo()` sobrescrito (override)
+
+#### Clase `Motocicleta` hereda de `Vehículo`
+Atributos adicionales:
+- `tieneAlarón` (bool)
+- `cilindrada` (int)
+
+Métodos:
+- Constructor
+- Getters y Setters
+- `mostrarInfo()` sobrescrito (override)
+
+**Ejemplo de uso:**
+```
+Auto miAuto("Ford", "Mustang", 2023, 220, 4, "Gasolina");
+Motocicleta miMoto("Harley-Davidson", "Sportster", 2023, 200, true, 1200);
+
+miAuto.mostrarInfo();
+miMoto.mostrarInfo();
+
+*/
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Clase base Vehiculo
+class Vehiculo {
+protected: // protegidos para que las clases hijas puedan acceder
+    string marca;
+    string modelo;
+    int año;
+    double velocidadMaxima;
+
+public:
+    // Constructor con validaciones
+    Vehiculo(string ma, string mo, int a, double v) {
+        marca = ma;
+        modelo = mo;
+        año = (a > 1886) ? a : 1887;
+        velocidadMaxima = (v > 0) ? v : 1;
+    }
+
+    // Getters
+    string getMarca() { return marca; }
+    string getModelo() { return modelo; }
+    int getAño() { return año; }
+    double getVelocidadMaxima() { return velocidadMaxima; }
+
+    // Setters
+    void setMarca(string ma) { marca = ma; }
+    void setModelo(string mo) { modelo = mo; }
+    void setAño(int a) {
+        if (a > 1886) año = a;
+        else cout << "Error: año inválido." << endl;
+    }
+    void setVelocidadMaxima(double v) {
+        if (v > 0) velocidadMaxima = v;
+        else cout << "Error: velocidad inválida." << endl;
+    }
+
+    // Método mostrarInfo (virtual para sobrescribir)
+    virtual void mostrarInfo() {
+        cout << "Vehiculo: " << marca
+             << "\nModelo: " << modelo
+             << "\nAño: " << año
+             << "\nVelocidad Máxima: " << velocidadMaxima << " km/h"
+             << endl;
+    }
+};
+
+// Clase derivada Auto
+class Auto : public Vehiculo {
+private:
+    int numeroPuertas;
+    string tipoCombustible;
+
+public:
+    Auto(string ma, string mo, int a, double v, int puertas, string combustible)
+        : Vehiculo(ma, mo, a, v) {
+        numeroPuertas = puertas;
+        tipoCombustible = combustible;
+    }
+
+    // Getters y Setters
+    int getNumeroPuertas() { return numeroPuertas; }
+    string getTipoCombustible() { return tipoCombustible; }
+
+    void setNumeroPuertas(int puertas) {
+        if (puertas > 0) numeroPuertas = puertas;
+        else cout << "número de puertas inválido." << endl;
+    }
+
+    void setTipoCombustible(string combustible) { tipoCombustible = combustible; }
+
+    // Sobrescribir mostrarInfo
+    void mostrarInfo() override {
+        Vehiculo::mostrarInfo();
+        cout << "Número de Puertas: " << numeroPuertas
+             << "\nTipo de Combustible: " << tipoCombustible
+             << endl;
+    }
+};
+
+// Clase derivada Motocicleta
+class Motocicleta : public Vehiculo {
+private:
+    bool tieneAlaron;
+    int cilindrada;
+
+public:
+    Motocicleta(string ma, string mo, int a, double v, bool alaron, int cil)
+        : Vehiculo(ma, mo, a, v) {
+        tieneAlaron = alaron;
+        cilindrada = cil;
+    }
+
+    // Getters y Setters
+    bool getTieneAlaron() { return tieneAlaron; }
+    int getCilindrada() { return cilindrada; }
+
+    void setTieneAlaron(bool alaron) { tieneAlaron = alaron; }
+    void setCilindrada(int cil) {
+        if (cil > 0) cilindrada = cil;
+        else cout << "cilindrada inválida." << endl;
+    }
+
+    // Sobrescribir mostrarInfo
+    void mostrarInfo() override {
+        Vehiculo::mostrarInfo();
+        cout << "Tiene Alarón: " << (tieneAlaron ? "Sí" : "No")
+             << "\nCilindrada: " << cilindrada << " cc"
+             << endl;
+    }
+};
+
+// Ejemplo de uso
+int main() {
+    Auto miAuto("Volskwagen", "Golf", 2019, 220, 4, "Gasolina");
+    Motocicleta miMoto("Yamaha", "Xtz Lander", 2026, 150, false, 250);
+
+    cout << "\n--- Información del Auto ---" << endl;
+    miAuto.mostrarInfo();
+
+    cout << "\n--- Información de la Moto ---" << endl;
+    miMoto.mostrarInfo();
+}
+
+/*
+ Ejercicio 2.2: Sistema de Empleados
+Crea una clase base `Empleado` con:
+- `nombreCompleto` (string)
+- `numeroEmpleado` (string)
+- `salarioBase` (double)
+
+Crea dos clases derivadas:
+
+#### Clase `EmpleadoTiempoCompleto` hereda de `Empleado`
+Atributos:
+- `beneficios` (string)
+- `bono` (double)
+
+Métodos:
+- `calcularSalarioTotal()` → salarioBase + bono
+- `mostrarInfo()` sobrescrito
+
+#### Clase `EmpleadoPorHoras` hereda de `Empleado`
+Atributos:
+- `horasTrabajadas` (int)
+- `tarifaPorHora` (double)
+
+Métodos:
+- `calcularSalarioTotal()` → horasTrabajadas × tarifaPorHora
+- `mostrarInfo()` sobrescrito
+
+**Ejemplo de uso:**
+```
+EmpleadoTiempoCompleto emp1("Juan López", "001", 2000, "Seguro médico", 500);
+EmpleadoPorHoras emp2("María García", "002", 0, 40, 15);
+
+emp1.mostrarInfo();
+cout << "Salario: $" << emp1.calcularSalarioTotal() << endl;
+
+emp2.mostrarInfo();
+cout << "Salario: $" << emp2.calcularSalarioTotal() << endl;
+```
+*/
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Clase base Empleado
+class Empleado {
+protected:
+    string nombreCompleto;
+    string numeroEmpleado;
+    double salarioBase;
+
+public:
+    // Constructor
+    Empleado(string nombre, string numero, double salario) {
+        nombreCompleto = nombre;
+        numeroEmpleado = numero;
+        salarioBase = (salario >= 0) ? salario : 0; // validación
+    }
+
+    // Getters
+    string getNombreCompleto() { return nombreCompleto; }
+    string getNumeroEmpleado() { return numeroEmpleado; }
+    double getSalarioBase() { return salarioBase; }
+
+    // Setters
+    void setNombreCompleto(string nombre) { nombreCompleto = nombre; }
+    void setNumeroEmpleado(string numero) { numeroEmpleado = numero; }
+    void setSalarioBase(double salario) {
+        if (salario >= 0) salarioBase = salario;
+        else cout << "Error: El salario base no puede ser negativo." << endl;
+    }
+
+    // Método virtual para sobrescribir
+    virtual void mostrarInfo() {
+        cout << "Empleado: " << nombreCompleto
+             << "\nNúmero: " << numeroEmpleado
+             << "\nSalario Base: $" << salarioBase
+             << endl;
+    }
+
+    // Método virtual para calcular salario total
+    virtual double calcularSalarioTotal() {
+        return salarioBase;
+    }
+};
+
+// Clase derivada EmpleadoTiempoCompleto
+class EmpleadoTiempoCompleto : public Empleado {
+private:
+    string beneficios;
+    double bono;
+
+public:
+    // Constructor
+    EmpleadoTiempoCompleto(string nombre, string numero, double salario,
+                           string ben, double b)
+        : Empleado(nombre, numero, salario) {
+        beneficios = ben;
+        bono = (b >= 0) ? b : 0;
+    }
+
+    // Getters y Setters
+    string getBeneficios() { return beneficios; }
+    double getBono() { return bono; }
+
+    void setBeneficios(string ben) { beneficios = ben; }
+    void setBono(double b) {
+        if (b >= 0) bono = b;
+        else cout << "Error: El bono no puede ser negativo." << endl;
+    }
+
+    // Sobrescribir calcularSalarioTotal
+    double calcularSalarioTotal() override {
+        return salarioBase + bono;
+    }
+
+    // Sobrescribir mostrarInfo
+    void mostrarInfo() override {
+        Empleado::mostrarInfo();
+        cout << "Beneficios: " << beneficios
+             << "\nBono: $" << bono
+             << endl;
+    }
+};
+
+// Clase derivada EmpleadoPorHoras
+class EmpleadoPorHoras : public Empleado {
+private:
+    int horasTrabajadas;
+    double tarifaPorHora;
+
+public:
+    // Constructor
+    EmpleadoPorHoras(string nombre, string numero, double salario,
+                     int horas, double tarifa)
+        : Empleado(nombre, numero, salario) {
+        horasTrabajadas = (horas >= 0) ? horas : 0;
+        tarifaPorHora = (tarifa >= 0) ? tarifa : 0;
+    }
+
+    // Getters y Setters
+    int getHorasTrabajadas() { return horasTrabajadas; }
+    double getTarifaPorHora() { return tarifaPorHora; }
+
+    void setHorasTrabajadas(int horas) {
+        if (horas >= 0) horasTrabajadas = horas;
+        else cout << "Error: Las horas no pueden ser negativas." << endl;
+    }
+
+    void setTarifaPorHora(double tarifa) {
+        if (tarifa >= 0) tarifaPorHora = tarifa;
+        else cout << "Error: La tarifa no puede ser negativa." << endl;
+    }
+
+    // Sobrescribir calcularSalarioTotal
+    double calcularSalarioTotal() override {
+        return horasTrabajadas * tarifaPorHora;
+    }
+
+    // Sobrescribir mostrarInfo
+    void mostrarInfo() override {
+        Empleado::mostrarInfo();
+        cout << "Horas trabajadas: " << horasTrabajadas
+             << "\nTarifa por hora: $" << tarifaPorHora
+             << endl;
+    }
+};
+
+// Ejemplo de uso
+int main() {
+    EmpleadoTiempoCompleto emp1("Lejo Palacios", "001", 2000, "Seguro médico", 500);
+    EmpleadoPorHoras emp2("Checho Salazar", "002", 0, 40, 15);
+
+    cout << "\n--- Empleado Tiempo Completo ---" << endl;
+    emp1.mostrarInfo();
+    cout << "Salario Total: $" << emp1.calcularSalarioTotal() << endl;
+
+    cout << "\n--- Empleado Por Horas ---" << endl;
+    emp2.mostrarInfo();
+    cout << "Salario Total: $" << emp2.calcularSalarioTotal() << endl;
+}
+
+/*
+ Ejercicio 3.1: Jerarquía de Animales
+Crea la siguiente jerarquía:
+
+```
+        Животное (Animal)
+           /        \
+       Mamífero    Ave
+        /   \       / \
+     Perro Gato  Loro Aguila
+```
+
+**Clase base `Animal`:**
+- `nombre` (string)
+- `edad` (int)
+- `peso` (double)
+
+Métodos virtuales:
+- `hacerSonido()` virtual
+- `mostrarInfo()` virtual
+- Getters y Setters
+
+**Clase intermedia `Mamífero` hereda de `Animal`:**
+- Atributo: `tieneColaMamífero` (bool)
+- Sobrescribir métodos
+
+**Clase intermedia `Ave` hereda de `Animal`:**
+- Atributo: `envergaduraAlas` (double)
+- Sobrescribir métodos
+
+**Clases finales:**
+- `Perro`, `Gato`, `Loro`, `Aguila` heredan de sus respectivas clases intermedias
+
+**Ejemplo de uso:**
+```
+Perro perro("Rex", 5, 25, true);
+Gato gato("Whiskers", 3, 4.5, false);
+Loro loro("Tweety", 2, 0.5, 0.3);
+
+perro.mostrarInfo();
+perro.hacerSonido();
+
+gato.mostrarInfo();
+gato.hacerSonido();
+
+loro.mostrarInfo();
+loro.hacerSonido();
+```
+*/
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Clase base Animal
+class Animal {
+protected:
+    string nombre;
+    int edad;
+    double peso;
+
+public:
+    Animal(string n, int e, double p) {
+        nombre = n;
+        edad = (e >= 0) ? e : 0;
+        peso = (p >= 0) ? p : 0;
+    }
+
+    // Getters
+    string getNombre() { return nombre; }
+    int getEdad() { return edad; }
+    double getPeso() { return peso; }
+
+    // Setters
+    void setNombre(string n) { nombre = n; }
+    void setEdad(int e) { if (e >= 0) edad = e; }
+    void setPeso(double p) { if (p >= 0) peso = p; }
+
+    // Métodos virtuales
+    virtual void hacerSonido() {
+        cout << nombre << " hace un sonido genérico." << endl;
+    }
+
+    virtual void mostrarInfo() {
+        cout << "Nombre: " << nombre
+             << "\nEdad: " << edad << " años"
+             << "\nPeso: " << peso << " kg"
+             << endl;
+    }
+};
+
+// Clase intermedia Mamífero
+class Mamifero : public Animal {
+protected:
+    bool tieneColaMamifero;
+
+public:
+    Mamifero(string n, int e, double p, bool cola)
+        : Animal(n, e, p) {
+        tieneColaMamifero = cola;
+    }
+
+    bool getTieneColaMamifero() { return tieneColaMamifero; }
+    void setTieneColaMamifero(bool cola) { tieneColaMamifero = cola; }
+
+    void mostrarInfo() override {
+        Animal::mostrarInfo();
+        cout << "Tiene cola: " << (tieneColaMamifero ? "Sí" : "No") << endl;
+    }
+};
+
+// Clase intermedia Ave
+class Ave : public Animal {
+protected:
+    double envergaduraAlas;
+
+public:
+    Ave(string n, int e, double p, double alas)
+        : Animal(n, e, p) {
+        envergaduraAlas = (alas > 0) ? alas : 0.1;
+    }
+
+    double getEnvergaduraAlas() { return envergaduraAlas; }
+    void setEnvergaduraAlas(double alas) {
+        if (alas > 0) envergaduraAlas = alas;
+    }
+
+    void mostrarInfo() override {
+        Animal::mostrarInfo();
+        cout << "Envergadura de alas: " << envergaduraAlas << " m" << endl;
+    }
+};
+
+// Clase final Perro
+class Perro : public Mamifero {
+public:
+    Perro(string n, int e, double p, bool cola)
+        : Mamifero(n, e, p, cola) {}
+
+    void hacerSonido() override {
+        cout << nombre << " ladra: ¡Guau guau!" << endl;
+    }
+
+    void mostrarInfo() override {
+        Mamifero::mostrarInfo();
+        cout << "Es un perro." << endl;
+    }
+};
+
+// Clase final Gato
+class Gato : public Mamifero {
+public:
+    Gato(string n, int e, double p, bool cola)
+        : Mamifero(n, e, p, cola) {}
+
+    void hacerSonido() override {
+        cout << nombre << " maúlla: ¡Miau!" << endl;
+    }
+
+    void mostrarInfo() override {
+        Mamifero::mostrarInfo();
+        cout << "Es un gato." << endl;
+    }
+};
+
+// Clase final Loro
+class Loro : public Ave {
+public:
+    Loro(string n, int e, double p, double alas)
+        : Ave(n, e, p, alas) {}
+
+    void hacerSonido() override {
+        cout << nombre << " dice: ¡Asi como suena!" << endl;
+    }
+
+    void mostrarInfo() override {
+        Ave::mostrarInfo();
+        cout << "Es un loro." << endl;
+    }
+};
+
+// Clase final Aguila
+class Aguila : public Ave {
+public:
+    Aguila(string n, int e, double p, double alas)
+        : Ave(n, e, p, alas) {}
+
+    void hacerSonido() override {
+        cout << nombre << " grita: ¡Kiiiiii!" << endl;
+    }
+
+    void mostrarInfo() override {
+        Ave::mostrarInfo();
+        cout << "Es un águila." << endl;
+    }
+};
+
+// Ejemplo de uso
+int main() {
+    Perro perro("Alex", 5, 25, true);
+    Gato gato("Fido", 3, 4.5, false);
+    Loro loro("Fercho", 2, 0.5, 0.3);
+    Aguila aguila("Sky", 4, 6.0, 2.1);
+
+    cout << "\n--- Perro ---" << endl;
+    perro.mostrarInfo();
+    perro.hacerSonido();
+
+    cout << "\n--- Gato ---" << endl;
+    gato.mostrarInfo();
+    gato.hacerSonido();
+
+    cout << "\n--- Loro ---" << endl;
+    loro.mostrarInfo();
+    loro.hacerSonido();
+
+    cout << "\n--- Aguila ---" << endl;
+    aguila.mostrarInfo();
+    aguila.hacerSonido();
+}
+/*
+Ejercicio 3.2: Sistema Bancario
+Crea una jerarquía:
+
+```
+        Cuenta
+       /      \
+   CuentaAhorro CuentaCorriente
+```
+
+**Clase base `Cuenta`:**
+- `numeroCuenta` (string)
+- `propietario` (string)
+- `saldo` (double)
+
+Métodos:
+- `depositar(double monto)` virtual
+- `retirar(double monto)` virtual
+- `mostrarInfo()` virtual
+- Getters y Setters con validaciones
+
+**Clase `CuentaAhorro` hereda de `Cuenta`:**
+- Atributo: `tasaInteres` (double)
+- Método: `generarInteres()` que calcule y agregue interés
+- Sobrescribir `depositar()` y `retirar()`
+
+**Clase `CuentaCorriente` hereda de `Cuenta`:**
+- Atributo: `limiteDescubierto` (double)
+- Método: `solicitarDescubierto(double monto)`
+- Sobrescribir `depositar()` y `retirar()`
+
+**Ejemplo de uso:**
+```
+CuentaAhorro ahorros("123456", "Carlos", 5000, 0.02);
+CuentaCorriente corriente("789012", "Ana", 2000, 1000);
+
+ahorros.depositar(1000);
+ahorros.mostrarInfo();
+ahorros.generarInteres();
+ahorros.mostrarInfo();
+
+corriente.retirar(2500); // Usa descubierto
+corriente.mostrarInfo();
+```
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Clase base Cuenta
+class Cuenta {
+protected:
+    string numeroCuenta;
+    string propietario;
+    double saldo;
+
+public:
+    // Constructor
+    Cuenta(string num, string prop, double s) {
+        numeroCuenta = num;
+        propietario = prop;
+        saldo = (s >= 0) ? s : 0; // validación
+    }
+
+    // Getters
+    string getNumeroCuenta() { return numeroCuenta; }
+    string getPropietario() { return propietario; }
+    double getSaldo() { return saldo; }
+
+    // Setters
+    void setNumeroCuenta(string num) { numeroCuenta = num; }
+    void setPropietario(string prop) { propietario = prop; }
+    void setSaldo(double s) {
+        if (s >= 0) saldo = s;
+        else cout << "Error: El saldo no puede ser negativo." << endl;
+    }
+
+    // Métodos virtuales
+    virtual void depositar(double monto) {
+        if (monto > 0) saldo += monto;
+        else cout << "Error: El monto a depositar debe ser positivo." << endl;
+    }
+
+    virtual void retirar(double monto) {
+        if (monto > 0 && monto <= saldo) saldo -= monto;
+        else cout << "Error: Retiro inválido." << endl;
+    }
+
+    virtual void mostrarInfo() {
+        cout << "Cuenta: " << numeroCuenta
+             << "\nPropietario: " << propietario
+             << "\nSaldo: $" << saldo
+             << endl;
+    }
+};
+
+// Clase derivada CuentaAhorro
+class CuentaAhorro : public Cuenta {
+private:
+    double tasaInteres;
+
+public:
+    CuentaAhorro(string num, string prop, double s, double tasa)
+        : Cuenta(num, prop, s) {
+        tasaInteres = (tasa >= 0) ? tasa : 0;
+    }
+
+    double getTasaInteres() { return tasaInteres; }
+    void setTasaInteres(double tasa) {
+        if (tasa >= 0) tasaInteres = tasa;
+        else cout << "Error: La tasa de interés no puede ser negativa." << endl;
+    }
+
+    void generarInteres() {
+        double interes = saldo * tasaInteres;
+        saldo += interes;
+        cout << "Interés generado: $" << interes << endl;
+    }
+
+    void depositar(double monto) override {
+        if (monto > 0) {
+            saldo += monto;
+            cout << "Depósito en cuenta de ahorro: $" << monto << endl;
+        } else {
+            cout << "Error: El monto a depositar debe ser positivo." << endl;
+        }
+    }
+
+    void retirar(double monto) override {
+        if (monto > 0 && monto <= saldo) {
+            saldo -= monto;
+            cout << "Retiro en cuenta de ahorro: $" << monto << endl;
+        } else {
+            cout << "Error: Retiro inválido en cuenta de ahorro." << endl;
+        }
+    }
+
+    void mostrarInfo() override {
+        Cuenta::mostrarInfo();
+        cout << "Tasa de interés: " << tasaInteres * 100 << "%" << endl;
+    }
+};
+
+// Clase derivada CuentaCorriente
+class CuentaCorriente : public Cuenta {
+private:
+    double limiteDescubierto;
+
+public:
+    CuentaCorriente(string num, string prop, double s, double limite)
+        : Cuenta(num, prop, s) {
+        limiteDescubierto = (limite >= 0) ? limite : 0;
+    }
+
+    double getLimiteDescubierto() { return limiteDescubierto; }
+    void setLimiteDescubierto(double limite) {
+        if (limite >= 0) limiteDescubierto = limite;
+        else cout << "Error: El límite de descubierto no puede ser negativo." << endl;
+    }
+
+    void solicitarDescubierto(double monto) {
+        if (monto > 0 && monto <= limiteDescubierto) {
+            saldo -= monto;
+            cout << "Descubierto solicitado: $" << monto << endl;
+        } else {
+            cout << "Error: Descubierto inválido." << endl;
+        }
+    }
+
+    void depositar(double monto) override {
+        if (monto > 0) {
+            saldo += monto;
+            cout << "Depósito en cuenta corriente: $" << monto << endl;
+        } else {
+            cout << "Error: El monto a depositar debe ser positivo." << endl;
+        }
+    }
+
+    void retirar(double monto) override {
+        if (monto > 0 && monto <= saldo + limiteDescubierto) {
+            saldo -= monto;
+            cout << "Retiro en cuenta corriente: $" << monto << endl;
+        } else {
+            cout << "Error: Retiro inválido en cuenta corriente." << endl;
+        }
+    }
+
+    void mostrarInfo() override {
+        Cuenta::mostrarInfo();
+        cout << "Límite de descubierto: $" << limiteDescubierto << endl;
+    }
+};
+
+// Ejemplo de uso
+int main() {
+    CuentaAhorro ahorros("123456", "Jake", 5000, 0.02);
+    CuentaCorriente corriente("789012", "Alejo", 2000, 1000);
+
+    cout << "\n--- Cuenta de Ahorro ---" << endl;
+    ahorros.depositar(1000);
+    ahorros.mostrarInfo();
+    ahorros.generarInteres();
+    ahorros.mostrarInfo();
+
+    cout << "\n--- Cuenta Corriente ---" << endl;
+    corriente.retirar(2500); // Usa descubierto
+    corriente.mostrarInfo();
+
+}
+
+*/
+Ejercicio 4.1: Sistema de Universidades
+**Crea una estructura completa con:**
+
+1. Clase `Persona` (base)
+   - Atributos: nombre, edad, cédula
+   - Métodos: getters, setters, mostrarInfo()
+
+2. Clases derivadas de `Persona`:
+   - `Estudiante` (carrera, promedio, semestre)
+   - `Profesor` (especialidad, años_experiencia, número_estudiantes)
+   - `Personal` (puesto, departamento, salario)
+
+3. Dentro de `Estudiante`:
+   - Crear clase `Curso` (código, nombre, creditos, profesor)
+   - Métodos para matricular cursos, ver calificaciones
+
+4. Métodos especiales en cada clase:
+   - `Estudiante::calcularPromedioActual()`
+   - `Profesor::estaDisponible(int horaDelDía)`
+   - `Personal::calcularSalarioMensual()`
+/*
+
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+// Clase base Persona
+class Persona {
+protected:
+    string nombre;
+    int edad;
+    string cedula;
+
+public:
+    Persona(string n, int e, string c) {
+        nombre = n;
+        edad = (e >= 0) ? e : 0;
+        cedula = c;
+    }
+
+    // Getters
+    string getNombre() { return nombre; }
+    int getEdad() { return edad; }
+    string getCedula() { return cedula; }
+
+    // Setters
+    void setNombre(string n) { nombre = n; }
+    void setEdad(int e) { if (e >= 0) edad = e; }
+    void setCedula(string c) { cedula = c; }
+
+    // Método mostrarInfo
+    virtual void mostrarInfo() {
+        cout << "Nombre: " << nombre
+             << "\nEdad: " << edad
+             << "\nCédula: " << cedula << endl;
+    }
+};
+
+// Clase Curso
+class Curso {
+private:
+    string codigo;
+    string nombreCurso;
+    int creditos;
+    string profesor;
+    double calificacion;
+
+public:
+    Curso(string cod, string nom, int cred, string prof)
+        : codigo(cod), nombreCurso(nom), creditos(cred), profesor(prof), calificacion(0) {}
+
+    string getCodigo() { return codigo; }
+    string getNombreCurso() { return nombreCurso; }
+    int getCreditos() { return creditos; }
+    string getProfesor() { return profesor; }
+    double getCalificacion() { return calificacion; }
+
+    void setCalificacion(double cal) {
+        if (cal >= 0 && cal <= 5) calificacion = cal;
+        else cout << "Error: calificación inválida (0-5)." << endl;
+    }
+
+    void mostrarInfo() {
+        cout << "Curso: " << nombreCurso
+             << " | Código: " << codigo
+             << " | Créditos: " << creditos
+             << " | Profesor: " << profesor
+             << " | Calificación: " << calificacion
+             << endl;
+    }
+};
+
+// Clase derivada Estudiante
+class Estudiante : public Persona {
+private:
+    string carrera;
+    double promedio;
+    int semestre;
+    vector<Curso> cursos;
+
+public:
+    Estudiante(string n, int e, string c, string car, double prom, int sem)
+        : Persona(n, e, c), carrera(car), promedio(prom), semestre(sem) {}
+
+    void matricularCurso(Curso curso) {
+        cursos.push_back(curso);
+        cout << "Curso " << curso.getNombreCurso() << " matriculado." << endl;
+    }
+
+    void verCursos() {
+        cout << "Cursos matriculados de " << nombre << ":" << endl;
+        for (auto &curso : cursos) {
+            curso.mostrarInfo();
+        }
+    }
+
+    double calcularPromedioActual() {
+        if (cursos.empty()) return 0;
+        double suma = 0;
+        for (auto &curso : cursos) {
+            suma += curso.getCalificacion();
+        }
+        promedio = suma / cursos.size();
+        return promedio;
+    }
+
+    void mostrarInfo() override {
+        Persona::mostrarInfo();
+        cout << "Carrera: " << carrera
+             << "\nPromedio: " << promedio
+             << "\nSemestre: " << semestre << endl;
+    }
+};
+
+// Clase derivada Profesor
+class Profesor : public Persona {
+private:
+    string especialidad;
+    int aniosExperiencia;
+    int numeroEstudiantes;
+
+public:
+    Profesor(string n, int e, string c, string esp, int exp, int numEst)
+        : Persona(n, e, c), especialidad(esp), aniosExperiencia(exp), numeroEstudiantes(numEst) {}
+
+    bool estaDisponible(int horaDelDia) {
+        // Ejemplo: disponible entre 8 y 17 horas
+        return (horaDelDia >= 8 && horaDelDia <= 17);
+    }
+
+    void mostrarInfo() override {
+        Persona::mostrarInfo();
+        cout << "Especialidad: " << especialidad
+             << "\nAños de experiencia: " << aniosExperiencia
+             << "\nNúmero de estudiantes: " << numeroEstudiantes << endl;
+    }
+};
+
+// Clase derivada Personal
+class Personal : public Persona {
+private:
+    string puesto;
+    string departamento;
+    double salario;
+
+public:
+    Personal(string n, int e, string c, string p, string d, double s)
+        : Persona(n, e, c), puesto(p), departamento(d), salario(s) {}
+
+    double calcularSalarioMensual() {
+        return salario;
+    }
+
+    void mostrarInfo() override {
+        Persona::mostrarInfo();
+        cout << "Puesto: " << puesto
+             << "\nDepartamento: " << departamento
+             << "\nSalario: $" << salario << endl;
+    }
+};
+
+// Ejemplo de uso
+int main() {
+    Estudiante est("Jake", 20, "123456", "Ingeniería", 4.2, 5);
+    Profesor prof("Alejo", 45, "789012", "Matemáticas", 20, 120);
+    Personal pers("Laura", 35, "345678", "Secretaria", "Administración", 2500);
+
+    cout << "\n--- Estudiante ---" << endl;
+    est.mostrarInfo();
+    Curso curso1("MAT101", "Cálculo", 4, "Alejo");
+    Curso curso2("PROG202", "Programación", 3, "Carlos");
+    est.matricularCurso(curso1);
+    est.matricularCurso(curso2);
+
+    curso1.setCalificacion(4.5);
+    curso2.setCalificacion(3.8);
+
+    est.verCursos();
+    cout << "Promedio actual: " << est.calcularPromedioActual() << endl;
+
+    cout << "\n--- Profesor ---" << endl;
+    prof.mostrarInfo();
+    cout << "¿Disponible a las 10? " << (prof.estaDisponible(10) ? "Sí" : "No") << endl;
+
+    cout << "\n--- Personal ---" << endl;
+    pers.mostrarInfo();
+    cout << "Salario mensual: $" << pers.calcularSalarioMensual() << endl;
+}
